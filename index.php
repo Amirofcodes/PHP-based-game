@@ -1,17 +1,10 @@
 <?php
+
 abstract class Hero
 {
-    protected string $name;
-    protected int $health;
-    protected int $strength;
-    protected int $level;
 
-    function __construct(string $name, int $health, int $strength, int $level = 1)
+    public function __construct(protected string $name, protected int $health, protected int $strength, protected int $level = 1)
     {
-        $this->name = $name;
-        $this->health = $health;
-        $this->strength = $strength;
-        $this->level = $level;
     }
 
     public function getName(): string
@@ -39,51 +32,46 @@ abstract class Hero
         return $this->level;
     }
 
-    public function setLevel(int $level): void
+    public function increaseLevel(): void
     {
-        $this->level = $level;
+        $this->level += 1;
     }
 
-    public function display()
+    public function getMaxHealth(): int
     {
-        echo "Hero Details:<br>";
-        echo "Name: " . $this->getName() . "<br>";
-        echo "Health: " . $this->getHealth() . "<br>";
-        echo "Strength: " . $this->getStrength() . "<br>";
-        echo "Level: " . $this->getLevel() . "<br>";
-        echo "<br>";
+        return $this->health;
     }
 }
 
 final class Warrior extends Hero
 {
-    private array $Moves;
+    private array $moves;
 
-    public function __construct(string $name, int $health, int $strength, array $Moves)
+    public function __construct(string $name, int $health, int $strength, array $moves, int $level = 1)
     {
-        parent::__construct($name, $health, $strength);
-        $this->Moves = $Moves;
+        parent::__construct($name, $health, $strength, $level);
+        $this->moves = $moves;
     }
 
     public function getMoves(): array
     {
-        return $this->Moves;
+        return $this->moves;
     }
 
     public function warriorAttack()
     {
-        $randomMove = $this->Moves[array_rand($this->Moves)];
-        echo $this->getName() . " attacks with " . $randomMove . "<br>";
+        $randomMove = $this->moves[array_rand($this->moves)];
+        echo $this->name . " attacks with " . $randomMove . "<br>";
     }
 
     public function display()
     {
         echo "Warrior Details:<br>";
-        echo "Name: " . $this->getName() . "<br>";
-        echo "Health: " . $this->getHealth() . "<br>";
-        echo "Strength: " . $this->getStrength() . "<br>";
-        echo "Level: " . $this->getLevel() . "<br>";
-        echo "Moves: " . implode(', ', $this->getMoves()) . "<br>";
+        echo "Name: " . $this->name . "<br>";
+        echo "Health: " . $this->health . "<br>";
+        echo "Strength: " . $this->strength . "<br>";
+        echo "Level: " . $this->level . "<br>";
+        echo "Moves: " . implode(', ', $this->moves) . "<br>";
         echo "<br>";
         $this->warriorAttack();
         echo "<br>";
@@ -94,9 +82,9 @@ final class Mage extends Hero
 {
     private array $magicPowers;
 
-    public function __construct(string $name, int $health, int $strength, array $magicPowers)
+    public function __construct(string $name, int $health, int $strength, array $magicPowers, int $level = 1)
     {
-        parent::__construct($name, $health, $strength);
+        parent::__construct($name, $health, $strength, $level);
         $this->magicPowers = $magicPowers;
     }
 
@@ -107,18 +95,18 @@ final class Mage extends Hero
 
     public function mageAttack()
     {
-        $randomMove2 = $this->magicPowers[array_rand($this->magicPowers)];
-        echo $this->getName() . " attacks with " . $randomMove2 . "<br>";
+        $randomMove = $this->magicPowers[array_rand($this->magicPowers)];
+        echo $this->name . " attacks with " . $randomMove . "<br>";
     }
 
     public function display()
     {
         echo "Mage Details:<br>";
-        echo "Name: " . $this->getName() . "<br>";
-        echo "Health: " . $this->getHealth() . "<br>";
-        echo "Strength: " . $this->getStrength() . "<br>";
-        echo "Level: " . $this->getLevel() . "<br>";
-        echo "Magic Powers: " . implode(', ', $this->getMoves()) . "<br>";
+        echo "Name: " . $this->name . "<br>";
+        echo "Health: " . $this->health . "<br>";
+        echo "Strength: " . $this->strength . "<br>";
+        echo "Level: " . $this->level . "<br>";
+        echo "Magic Powers: " . implode(', ', $this->magicPowers) . "<br>";
         echo "<br>";
         $this->mageAttack();
         echo "<br>";
