@@ -110,11 +110,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "<p>Level Up! New Level: {$winner->getLevel()}</p>";
 
             // Insert fight result into database
-            $stmt = $conn->prepare("INSERT INTO fight_results (winner, loser, winner_new_level) VALUES (?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO fight_results (winner, loser, Hero_level) VALUES (?, ?, ?)");
             $winnerName = $winner->getName();
             $loserName = $loser->getName();
-            $winnerNewLevel = $winner->getLevel();
-            $stmt->bind_param("ssi", $winnerName, $loserName, $winnerNewLevel);
+            $Hero_level = $winner->getLevel();
+            $stmt->bind_param("ssi", $winnerName, $loserName, $Hero_level);
             $stmt->execute();
             $stmt->close();
         }
